@@ -57,13 +57,13 @@ const invoices = [
 function PaymentTable() {
   return (
     <Table>
-      <TableCaption>A list of your recent invoices.</TableCaption>
+      <TableCaption>Historial de gastos</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead>Invoice</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Method</TableHead>
-          <TableHead className="text-right">Amount</TableHead>
+          <TableHead>Factura</TableHead>
+          <TableHead>Estado</TableHead>
+          <TableHead>Método</TableHead>
+          <TableHead className="text-right">Importe</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

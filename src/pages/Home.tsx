@@ -22,8 +22,8 @@ function Home() {
 
       <section>
         <div className="grid gap-2 md:grid-cols-2">
-          <PaymentTable />
           <PieChart />
+          <PaymentTable />
         </div>
       </section>
     </div>
