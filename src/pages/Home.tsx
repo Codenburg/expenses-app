@@ -1,21 +1,19 @@
 import { CardComponent } from "@/components/Card";
 import PaymentTable from "@/components/PaymentTable";
 import PieChart from "@/components/PieChart";
-import { FiDollarSign, FiClipboard, FiLink } from "react-icons/fi";
+import { FiDollarSign } from "react-icons/fi";
 
 function Home() {
   return (
-    <div className="container relative">
-      <h1 className="flex justify-start pl-4 antialiased uppercase text-5xl drop-shadow-md font-bold">
+    <div className="relative">
+      <h1 className="flex justify-start antialiased uppercase text-5xl drop-shadow-md font-bold">
         Expenses app
       </h1>
 
       <section>
-        <div className="relative space-y-4 pb-6 pt-6">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="space-y-4 pb-6 pt-6">
+          <div className="grid lg:grid-cols-2 sm:grid-cols-1">
             <CardComponent title="Disponible" IconCard={<FiDollarSign />} />
-            <CardComponent title="Gastos totales" IconCard={<FiClipboard />} />
-            <CardComponent title="Servicios" IconCard={<FiLink />} />
           </div>
         </div>
       </section>

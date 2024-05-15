@@ -29,6 +29,7 @@ function PieChart() {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
+      onresize: {},
       colors: {
         forceOverride: true,
       },
@@ -40,7 +41,11 @@ function PieChart() {
 
   return (
     <div>
-      <Pie options={options} data={data} />
+      <Pie
+        style={{ width: "370px", height: "400px" }}
+        options={options}
+        data={data}
+      />
     </div>
   );
 }

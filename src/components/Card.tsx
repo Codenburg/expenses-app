@@ -29,7 +29,7 @@ export function CardComponent({ title, IconCard }: Props) {
   return (
     <Card>
       <CardHeader className="p-6 flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm">{title}</CardTitle>
+        <CardTitle className="text-lg">{title}</CardTitle>
         {IconCard}
       </CardHeader>
       <CardContent className="flex justify-between pt-2">
