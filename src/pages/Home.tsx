@@ -1,41 +1,10 @@
 import { CardComponent } from "@/components/Card";
 import DataTable from "@/components/DataTable";
 import PieChart from "@/components/PieChart";
-import { Expenses, columns } from "@/types/Expenses";
-import { FiDollarSign } from "react-icons/fi";
+import { expensesData } from "@/lib/_data";
+import { columns } from "@/types/Expenses";
 
-const expensesData: Expenses[] = [
-  {
-    id: "3434",
-    amount: 434,
-    status: "pending",
-    category: "salud",
-  },
-  {
-    id: "343445",
-    amount: 4345,
-    status: "failed",
-    category: "salud",
-  },
-  {
-    id: "3434",
-    amount: 434,
-    status: "processing",
-    category: "salud",
-  },
-  {
-    id: "3434",
-    amount: 434,
-    status: "pending",
-    category: "salud",
-  },
-  {
-    id: "3434",
-    amount: 434,
-    status: "success",
-    category: "salud",
-  },
-];
+import { FiDollarSign } from "react-icons/fi";
 
 function Home() {
   return (
