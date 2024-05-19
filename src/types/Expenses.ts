@@ -1,6 +1,7 @@
 export type Expenses = {
   id: string;
   amount: number;
-  status: "pending" | "failed" | "processing" | "success";
+  status: "pendiente" | "atrasado" | "pagado";
   category: "salud" | "supermercado" | "electronica" | "servicios";
+  method: "credito" | "debito" | "efectivo";
 };
