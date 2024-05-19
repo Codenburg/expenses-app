@@ -27,15 +27,15 @@ export const columns: ColumnDef<Expenses>[] = [
   },
   {
     accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
+    header: "Monto",
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"));
+      const amount: Expenses["amount"] = parseFloat(row.getValue("amount"));
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
       }).format(amount);
 
-      return <div className="text-right font-medium">{formatted}</div>;
+      return <>{formatted}</>;
     },
   },
   {
@@ -51,9 +51,43 @@ export const columns: ColumnDef<Expenses>[] = [
         </Button>
       );
     },
+    cell: ({ row }) => {
+      const status: Expenses["status"] = row.getValue("status");
+      const statusUppercase = status.toUpperCase();
+
+      const statusStyles: Record<Expenses["status"], string> = {
+        pagado: "font-bold text-green-300",
+        pendiente: "font-bold text-yellow-300",
+        atrasado: "font-bold text-red-400",
+      };
+      const statusStyle = statusStyles[status];
+      return <div className={statusStyle}>{statusUppercase}</div>;
+    },
   },
   {
     accessorKey: "category",
     header: "Categoria",
+    cell: ({ row }) => {
+      const category: Expenses["category"] = row.getValue("category");
+      const categoryUppercase: string = category.toUpperCase();
+      const categoryStyles: Record<Expenses["category"], string> = {
+        salud: "font-bold text-blue-500",
+        supermercado: "font-bold text-green-500",
+        electronica: "font-bold text-red-500",
+        servicios: "font-bold text-yellow-500",
+      };
+      return (
+        <div className={categoryStyles[category]}>{categoryUppercase}</div>
+      );
+    },
+  },
+  {
+    accessorKey: "method",
+    header: "Metodo",
+    cell: ({ row }) => {
+      const method: Expenses["method"] = row.getValue("method");
+      const methodUppercase: string = method.toUpperCase();
+      return <>{methodUppercase}</>;
+    },
   },
 ];
