@@ -2,7 +2,7 @@ import { CardComponent } from "@/components/Card";
 import DataTable from "@/components/DataTable";
 import PieChart from "@/components/PieChart";
 import { expensesData } from "@/lib/_data";
-import { columns } from "@/types/Expenses";
+import { columns } from "@/types/columns"; 
 
 import { FiDollarSign } from "react-icons/fi";
 

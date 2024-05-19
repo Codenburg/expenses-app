@@ -1,14 +1,8 @@
-import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
+import { Expenses } from "./Expenses";
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-
-export type Expenses = {
-  id: string;
-  amount: number;
-  status: "pending" | "failed" | "processing" | "success";
-  category: "salud" | "supermercado" | "electronica" | "servicios";
-};
 
 export const columns: ColumnDef<Expenses>[] = [
   {
