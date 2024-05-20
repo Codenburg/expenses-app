@@ -2,9 +2,10 @@ import { CardComponent } from "@/components/Card";
 import DataTable from "@/components/DataTable";
 import PieChart from "@/components/PieChart";
 import { expensesData } from "@/lib/_data";
-import { columns } from "@/types/columns"; 
+import { columns } from "@/components/columns";
 
 import { FiDollarSign } from "react-icons/fi";
+import DialogAddButton from "@/components/DialogAddButton";
 
 function Home() {
   return (
@@ -18,9 +19,11 @@ function Home() {
           <div className="flex justify-center">
             <CardComponent title="Disponible" IconCard={<FiDollarSign />} />
           </div>
+          <div className="flex justify-center">
+            <DialogAddButton/>
+          </div>
         </div>
       </section>
-
       <section>
         <div className="flex-row space-y-10">
           <PieChart />

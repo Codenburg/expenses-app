@@ -1,6 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
-import { Expenses } from "./Expenses";
+import { Expenses } from "../types/Expenses";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 
