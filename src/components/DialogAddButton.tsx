@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -13,10 +14,14 @@ import { Label } from "@/components/ui/label";
 import SelectButton from "./SelectButton";
 
 function DialogAddButton() {
+  function onSubmit() {
+    console.log("Enviado!");
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Añadir gasto</Button>
+        <Button>Añadir gasto</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -53,7 +58,11 @@ function DialogAddButton() {
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Añadir</Button>
+          <DialogClose asChild>
+            <Button type="submit" onClick={onSubmit}>
+              Añadir
+            </Button>
+          </DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>
