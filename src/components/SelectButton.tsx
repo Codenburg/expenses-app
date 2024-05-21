@@ -15,13 +15,22 @@ const expenseOptions = {
 
 interface SelectButtonProps {
   buttonValue: keyof typeof expenseOptions;
+  onSelectChange: (values: Record<string, string>) => void;
+  selectedValues: Record<string, string>;
 }
 
-function SelectButton({ buttonValue }: SelectButtonProps) {
+function SelectButton({
+  buttonValue,
+  onSelectChange,
+  selectedValues,
+}: SelectButtonProps) {
   const options = expenseOptions[buttonValue];
-
   return (
-    <Select>
+    <Select
+      onValueChange={(value) => {
+        onSelectChange({ ...selectedValues, [buttonValue]: value });
+      }}
+    >
       <SelectTrigger className="w-[280px]">
         <SelectValue placeholder="Selecciona una opción" />
       </SelectTrigger>
