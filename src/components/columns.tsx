@@ -39,7 +39,7 @@ export const columns: ColumnDef<Expenses>[] = [
     },
   },
   {
-    accessorKey: "status",
+    accessorKey: "state",
     header: ({ column }) => {
       return (
         <Button
@@ -52,10 +52,10 @@ export const columns: ColumnDef<Expenses>[] = [
       );
     },
     cell: ({ row }) => {
-      const status: Expenses["status"] = row.getValue("status");
+      const status: Expenses["state"] = row.getValue("state");
       const statusUppercase = status.toUpperCase();
 
-      const statusStyles: Record<Expenses["status"], string> = {
+      const statusStyles: Record<Expenses["state"], string> = {
         pagado: "font-bold text-green-300",
         pendiente: "font-bold text-yellow-300",
         atrasado: "font-bold text-red-400",
