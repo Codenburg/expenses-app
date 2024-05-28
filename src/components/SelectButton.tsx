@@ -31,7 +31,7 @@ function SelectButton({
         onSelectChange({ ...selectedValues, [buttonValue]: value });
       }}
     >
-      <SelectTrigger className="w-[280px]">
+      <SelectTrigger className="col-span-3">
         <SelectValue placeholder="Selecciona una opción" />
       </SelectTrigger>
       <SelectContent>
