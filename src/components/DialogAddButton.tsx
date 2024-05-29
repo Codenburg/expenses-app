@@ -8,10 +8,16 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import ExpenseForm from "./ExpenseForm";
+import { useState } from "react";
 
 function DialogAddButton() {
+  const [open, setOpen] = useState<boolean>(false);
+
+  function handleOpenChange() {
+    setOpen(false);
+  }
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>Añadir gasto</Button>
       </DialogTrigger>
@@ -23,7 +29,7 @@ function DialogAddButton() {
             añadir.
           </DialogDescription>
         </DialogHeader>
-        <ExpenseForm/>
+        <ExpenseForm onOpenChange={handleOpenChange} />
       </DialogContent>
     </Dialog>
   );

@@ -9,12 +9,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { expenseSchema } from "@/types/expenseSchema";
 import { z } from "zod";
 import CurrencyInput from "./ui/CurrencyInput";
+import { DialogFooter } from "./ui/dialog";
 
-function ExpenseForm() {
+interface formProps {
+  onOpenChange: () => void;
+}
+
+function ExpenseForm({ onOpenChange }: formProps) {
   const form = useForm<z.infer<typeof expenseSchema>>({
     resolver: zodResolver(expenseSchema),
     mode: "onChange",
@@ -26,6 +30,7 @@ function ExpenseForm() {
     values: z.infer<typeof expenseSchema>
   ) => {
     console.log("values", values);
+    onOpenChange();
   };
 
   return (
@@ -47,13 +52,15 @@ function ExpenseForm() {
             </FormItem>
           )}
         />
-        <Button
-          type="button"
-          disabled={!form.formState.isValid}
-          onClick={form.handleSubmit(onSubmit)}
-        >
-          Añadir gasto
-        </Button>
+        <DialogFooter>
+          <Button
+            type="button"
+            disabled={!form.formState.isValid}
+            onClick={form.handleSubmit(onSubmit)}
+          >
+            Añadir gasto
+          </Button>
+        </DialogFooter>
       </form>
     </Form>
   );
