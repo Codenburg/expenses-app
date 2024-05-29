@@ -15,6 +15,7 @@ const CurrencyInput = ({ value, onValueChange }: CurrencyInputProps) => {
       prefix="$"
       decimalsLimit={2}
       maxLength={15}
+      placeholder='Ej: 100 000'
     />
   );
 };
