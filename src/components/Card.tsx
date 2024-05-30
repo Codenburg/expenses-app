@@ -1,16 +1,15 @@
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { Database } from "../types/schema";
 import { supabase } from "../../db/supabase";
-import { FiCornerLeftUp } from "react-icons/fi";
 
 interface Props {
   title: string;
   IconCard: JSX.Element;
+  children: ReactNode;
 }
-export function CardComponent({ title, IconCard }: Props) {
+export function CardComponent({ title, IconCard, children }: Props) {
   const [amount, setAmount] =
     useState<Database["public"]["Tables"]["expenses"]["Row"]["amount"]>();
 
@@ -33,13 +32,11 @@ export function CardComponent({ title, IconCard }: Props) {
         <CardTitle className="text-lg">{title}</CardTitle>
         {IconCard}
       </CardHeader>
-      <CardContent className="flex space-x-10 justify-between pt-2">
+      <CardContent className="flex p-6 space-x-14 pt-3">
         <Label className="text-2xl font-bold ">
-          ${amount ? amount : 50000}
+          {amount ? `$${amount}` : "Cargando..."}
         </Label>
-        <Button>
-          <FiCornerLeftUp />
-        </Button>
+        {children}
       </CardContent>
     </Card>
   );
