@@ -16,6 +16,7 @@ interface DialogProps {
   open: boolean;
   setOpen: (arg: boolean) => void;
   children: ReactNode;
+  buttonVariant?: null | "outline";
 }
 function DialogAddButton({
   title,
@@ -24,13 +25,12 @@ function DialogAddButton({
   open,
   setOpen,
   children,
+  buttonVariant,
 }: DialogProps) {
-
-
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>{title}</Button>
+        <Button variant={buttonVariant}>{title}</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

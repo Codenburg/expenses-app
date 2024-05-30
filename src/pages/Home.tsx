@@ -4,19 +4,24 @@ import PieChart from "@/components/PieChart";
 import { expensesData } from "@/lib/_data";
 import { columns } from "@/components/columns";
 
-import { FiDollarSign } from "react-icons/fi";
+import { FiDollarSign, FiPlus } from "react-icons/fi";
 import DialogAddButton from "@/components/DialogAddButton";
 import { Toaster } from "@/components/ui/toaster";
 import ExpenseForm from "@/components/ExpenseForm";
 import { useState } from "react";
+import AmountForm from "@/components/AmountForm";
 
 function Home() {
-  const [open, setOpen] = useState<boolean>(false);
-
-  function handleOpenChange() {
-    setOpen(false);
-  }
-
+  const [dialogs, setDialogs] = useState({
+    amountDialogOpen: false,
+    expenseDialogOpen: false,
+  });
+  const handleDialogOpenChange = (dialogName: string, isOpen: boolean) => {
+    setDialogs((prevDialogs) => ({
+      ...prevDialogs,
+      [dialogName]: isOpen,
+    }));
+  };
   return (
     <div className="relative">
       <h1 className="flex justify-center antialiased uppercase text-5xl drop-shadow-md font-bold">
@@ -28,6 +33,25 @@ function Home() {
             <CardComponent
               title="Disponible"
               IconCard={<FiDollarSign className="m-3" />}
+              children={
+                <DialogAddButton
+                  title={ <FiPlus />}
+                  buttonVariant={'outline'}
+                  dialogTitle="Ingrese un monto"
+                  dialogDescription="Ingrese el monto que desee añadir"
+                  open={dialogs.amountDialogOpen}
+                  setOpen={(isOpen) =>
+                    handleDialogOpenChange("amountDialogOpen", isOpen)
+                  }
+                  children={
+                    <AmountForm
+                      onOpenChange={() =>
+                        handleDialogOpenChange("amountDialogOpen", false)
+                      }
+                    />
+                  }
+                />
+              }
             />
           </div>
           <div className="flex justify-center">
@@ -36,9 +60,17 @@ function Home() {
               dialogTitle="Añadir gasto"
               dialogDescription="Introduzca el monto, método, categoria y estado del gasto que desea
             añadir."
-              open={open}
-              setOpen={setOpen}
-              children={<ExpenseForm onOpenChange={handleOpenChange} />}
+              open={dialogs.expenseDialogOpen}
+              setOpen={(isOpen) =>
+                handleDialogOpenChange("expenseDialogOpen", isOpen)
+              }
+              children={
+                <ExpenseForm
+                  onOpenChange={() =>
+                    handleDialogOpenChange("expenseDialogOpen", false)
+                  }
+                />
+              }
             />
           </div>
         </div>
