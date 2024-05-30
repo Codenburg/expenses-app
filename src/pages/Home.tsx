@@ -7,8 +7,16 @@ import { columns } from "@/components/columns";
 import { FiDollarSign } from "react-icons/fi";
 import DialogAddButton from "@/components/DialogAddButton";
 import { Toaster } from "@/components/ui/toaster";
+import ExpenseForm from "@/components/ExpenseForm";
+import { useState } from "react";
 
 function Home() {
+  const [open, setOpen] = useState<boolean>(false);
+
+  function handleOpenChange() {
+    setOpen(false);
+  }
+
   return (
     <div className="relative">
       <h1 className="flex justify-center antialiased uppercase text-5xl drop-shadow-md font-bold">
@@ -23,7 +31,15 @@ function Home() {
             />
           </div>
           <div className="flex justify-center">
-            <DialogAddButton />
+            <DialogAddButton
+              title="Añadir gasto"
+              dialogTitle="Añadir gasto"
+              dialogDescription="Introduzca el monto, método, categoria y estado del gasto que desea
+            añadir."
+              open={open}
+              setOpen={setOpen}
+              children={<ExpenseForm onOpenChange={handleOpenChange} />}
+            />
           </div>
         </div>
       </section>

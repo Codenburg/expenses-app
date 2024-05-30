@@ -7,29 +7,37 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import ExpenseForm from "./ExpenseForm";
-import { useState } from "react";
+import { ReactNode } from "react";
 
-function DialogAddButton() {
-  const [open, setOpen] = useState<boolean>(false);
+interface DialogProps {
+  title: string | ReactNode;
+  dialogTitle: string;
+  dialogDescription: string;
+  open: boolean;
+  setOpen: (arg: boolean) => void;
+  children: ReactNode;
+}
+function DialogAddButton({
+  title,
+  dialogTitle,
+  dialogDescription,
+  open,
+  setOpen,
+  children,
+}: DialogProps) {
 
-  function handleOpenChange() {
-    setOpen(false);
-  }
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>Añadir gasto</Button>
+        <Button>{title}</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Añadir gasto</DialogTitle>
-          <DialogDescription>
-            Introduzca el monto, método, categoria y estado del gasto que desea
-            añadir.
-          </DialogDescription>
+          <DialogTitle>{dialogTitle}</DialogTitle>
+          <DialogDescription>{dialogDescription}</DialogDescription>
         </DialogHeader>
-        <ExpenseForm onOpenChange={handleOpenChange} />
+        {children}
       </DialogContent>
     </Dialog>
   );
