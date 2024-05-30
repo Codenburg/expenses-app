@@ -21,7 +21,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "@/components/ui/use-toast";
+import { ToastAction } from "./ui/toast";
 
 interface FormProps {
   onOpenChange: () => void;
@@ -31,17 +32,17 @@ function ExpenseForm({ onOpenChange }: FormProps) {
     resolver: zodResolver(expenseSchema),
     mode: "onChange",
   });
-  const { toast } = useToast();
   // const { watch } = useForm<z.infer<typeof expenseSchema>>();
   const onSubmit: SubmitHandler<z.infer<typeof expenseSchema>> = (
     values: z.infer<typeof expenseSchema>
   ) => {
-    console.log("values:", values);
     onOpenChange();
     toast({
-      title: "Scheduled: Catch up",
-      description: "Friday, February 10, 2023 at 5:57 PM",
+      title: "Gasto ingresado con éxito!",
+      duration: 2500,
+      action: <ToastAction altText="undo expense">Deshacer</ToastAction>,
     });
+    console.log("values:", values);
   };
 
   return (
