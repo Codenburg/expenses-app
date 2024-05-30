@@ -17,7 +17,10 @@ function Home() {
       <section>
         <div className="space-y-4 pb-6 pt-6">
           <div className="flex justify-center">
-            <CardComponent title="Disponible" IconCard={<FiDollarSign />} />
+            <CardComponent
+              title="Disponible"
+              IconCard={<FiDollarSign className="m-3" />}
+            />
           </div>
           <div className="flex justify-center">
             <DialogAddButton />

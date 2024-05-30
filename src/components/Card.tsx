@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import { useEffect, useState } from "react";
 import { Database } from "../types/schema";
 import { supabase } from "../../db/supabase";
-import { FiCornerLeftUp } from "react-icons/fi";
+import { FiPlus } from "react-icons/fi";
 
 interface Props {
   title: string;
@@ -33,12 +33,14 @@ export function CardComponent({ title, IconCard }: Props) {
         <CardTitle className="text-lg">{title}</CardTitle>
         {IconCard}
       </CardHeader>
-      <CardContent className="flex space-x-10 justify-between pt-2">
+      <CardContent className="flex p-6 space-x-14 pt-3">
         <Label className="text-2xl font-bold ">
-          ${amount ? amount : 50000}
+          ${amount ? amount : 'Cargando...'}
         </Label>
-        <Button>
-          <FiCornerLeftUp />
+        <Button 
+        variant={"ghost"}
+        size={"icon"}>
+        <FiPlus />
         </Button>
       </CardContent>
     </Card>
