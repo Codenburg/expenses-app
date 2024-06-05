@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/select";
 import { toast } from "@/components/ui/use-toast";
 import { ToastAction } from "./ui/toast";
+import { estados, categorias, metodos } from "@/types/Expenses";
 
 interface FormProps {
   onOpenChange: () => void;
@@ -78,9 +79,11 @@ function ExpenseForm({ onOpenChange }: FormProps) {
                 </FormControl>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectItem value="pagado">Pagado</SelectItem>
-                    <SelectItem value="atrasado">Atrasado</SelectItem>
-                    <SelectItem value="pendiente">Pendiente</SelectItem>
+                    {estados.map((estado) => (
+                      <SelectItem key={estado} value={estado}>
+                        {estado.charAt(0).toUpperCase() + estado.slice(1)}
+                      </SelectItem>
+                    ))}
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -102,10 +105,11 @@ function ExpenseForm({ onOpenChange }: FormProps) {
                 </FormControl>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectItem value="salud">Salud</SelectItem>
-                    <SelectItem value="supermercado">Supermercado</SelectItem>
-                    <SelectItem value="electronica">Electronica</SelectItem>
-                    <SelectItem value="servicios">Servicios</SelectItem>
+                    {categorias.map((categoria) => (
+                      <SelectItem key={categoria} value={categoria}>
+                        {categoria.charAt(0).toUpperCase() + categoria.slice(1)}
+                      </SelectItem>
+                    ))}
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -127,9 +131,11 @@ function ExpenseForm({ onOpenChange }: FormProps) {
                 </FormControl>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectItem value="efectivo">Efectivo</SelectItem>
-                    <SelectItem value="debito">Debito</SelectItem>
-                    <SelectItem value="credito">Credito</SelectItem>
+                    {metodos.map((metodo) => (
+                      <SelectItem key={metodo} value={metodo}>
+                        {metodo.charAt(0).toUpperCase() + metodo.slice(1)}
+                      </SelectItem>
+                    ))}
                   </SelectGroup>
                 </SelectContent>
               </Select>

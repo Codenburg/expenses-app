@@ -72,7 +72,7 @@ function AmountForm({ onOpenChange }: FormProps) {
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Selecciona el método de pago" />
+                    <SelectValue placeholder="Seleccione el método" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
