@@ -1,10 +1,12 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
-import { Expenses } from "../types/Expenses";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Enums, Tables } from "@/types/supabase-generated";
+import CategoryCell from "./CategoryCell";
 
-export const columns: ColumnDef<Expenses>[] = [
+
+export const columns: ColumnDef<Tables<"expenses">>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -26,10 +28,12 @@ export const columns: ColumnDef<Expenses>[] = [
     ),
   },
   {
-    accessorKey: "amount",
+    accessorKey: "expense_amount",
     header: "Monto",
     cell: ({ row }) => {
-      const amount: Expenses["amount"] = parseFloat(row.getValue("amount"));
+      const amount: Tables<"expenses">["expense_amount"] = parseFloat(
+        row.getValue("expense_amount")
+      );
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
@@ -39,7 +43,7 @@ export const columns: ColumnDef<Expenses>[] = [
     },
   },
   {
-    accessorKey: "state",
+    accessorKey: "payment_state",
     header: ({ column }) => {
       return (
         <Button
@@ -52,10 +56,10 @@ export const columns: ColumnDef<Expenses>[] = [
       );
     },
     cell: ({ row }) => {
-      const status: Expenses["state"] = row.getValue("state");
+      const status: Enums<"payment_state"> = row.getValue("payment_state");
       const statusUppercase = status.toUpperCase();
 
-      const statusStyles: Record<Expenses["state"], string> = {
+      const statusStyles: Record<Enums<"payment_state">, string> = {
         pagado: "font-bold text-green-300",
         pendiente: "font-bold text-yellow-300",
         atrasado: "font-bold text-red-400",
@@ -65,29 +69,38 @@ export const columns: ColumnDef<Expenses>[] = [
     },
   },
   {
-    accessorKey: "category",
+    accessorKey: "category_id",
     header: "Categoria",
     cell: ({ row }) => {
-      const category: Expenses["category"] = row.getValue("category");
-      const categoryUppercase: string = category.toUpperCase();
-      const categoryStyles: Record<Expenses["category"], string> = {
-        salud: "font-bold text-blue-500",
-        supermercado: "font-bold text-green-500",
-        electronica: "font-bold text-red-500",
-        servicios: "font-bold text-yellow-500",
-      };
-      return (
-        <div className={categoryStyles[category]}>{categoryUppercase}</div>
-      );
+      const category_id: Tables<"expenses">["category_id"] =
+        row.getValue("category_id");
+      // const categoryUppercase: string = category.toUpperCase();
+
+      return <CategoryCell categoryId={category_id}/>
     },
   },
   {
-    accessorKey: "method",
+    accessorKey: "payment_method",
     header: "Metodo",
     cell: ({ row }) => {
-      const method: Expenses["method"] = row.getValue("method");
+      const method: Enums<"payment_methods"> = row.getValue("payment_method");
       const methodUppercase: string = method.toUpperCase();
-      return <>{methodUppercase}</>;
+      const methodStyles: Record<Enums<"payment_methods">, string> = {
+        credito: "font-bold text-blue-500",
+        debito: "font-bold text-green-500",
+        efectivo: "font-bold text-red-500",
+        transferencia: "font-bold text-yellow-500",
+      };
+      return <div className={methodStyles[method]}>{methodUppercase}</div>;
+    },
+  },
+  {
+    accessorKey: "created_at",
+    header: "Fecha de pago",
+    cell: ({ row }) => {
+      const created_at: Tables<"expenses">["created_at"] =
+        row.getValue("created_at");
+      return <>{created_at}</>;
     },
   },
 ];

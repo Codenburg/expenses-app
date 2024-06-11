@@ -1,15 +1,16 @@
 import { CardComponent } from "@/components/Card";
 import DataTable from "@/components/DataTable";
 import PieChart from "@/components/PieChart";
-import { expensesData } from "@/lib/_data";
 import { columns } from "@/components/columns";
 
 import { FiDollarSign, FiPlus } from "react-icons/fi";
 import DialogAddButton from "@/components/DialogAddButton";
 import { Toaster } from "@/components/ui/toaster";
 import ExpenseForm from "@/components/ExpenseForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AmountForm from "@/components/AmountForm";
+import { supabase } from "../../db/supabase";
+import { Tables } from "@/types/supabase-generated";
 
 function Home() {
   const [dialogs, setDialogs] = useState({
@@ -22,6 +23,29 @@ function Home() {
       [dialogName]: isOpen,
     }));
   };
+
+  const [dataTable, setDataTable] = useState<Tables<"expenses">[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const expenses = await expensesData();
+      setDataTable(expenses);
+      console.log(expenses, "expenses");
+    };
+    fetchData();
+  }, []);
+
+  const expensesData = async (): Promise<Tables<"expenses">[]> => {
+    const { data: expense, error } = await supabase
+      .from("expenses")
+      .select(`*`);
+    if (error) {
+      console.log("error ", error);
+      return [];
+    }
+    return expense;
+  };
+
   return (
     <div className="relative">
       <h1 className="flex justify-center antialiased uppercase text-5xl drop-shadow-md font-bold">
@@ -35,8 +59,8 @@ function Home() {
               IconCard={<FiDollarSign className="m-3" />}
               children={
                 <DialogAddButton
-                  title={ <FiPlus />}
-                  buttonVariant={'outline'}
+                  title={<FiPlus />}
+                  buttonVariant={"outline"}
                   dialogTitle="Ingrese un monto"
                   dialogDescription="Ingrese el monto que desee añadir"
                   open={dialogs.amountDialogOpen}
@@ -78,7 +102,7 @@ function Home() {
       <section>
         <div className="flex-row space-y-10">
           <PieChart />
-          <DataTable data={expensesData} columns={columns} />
+          <DataTable data={dataTable} columns={columns} />
         </div>
       </section>
       <Toaster />

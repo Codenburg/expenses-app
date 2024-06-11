@@ -66,7 +66,7 @@ export type Database = {
       categories: {
         Row: {
           category_id: number
-          category_name: string | null
+          category_name: string
           created_at: string
           user_id: string | null
         }
