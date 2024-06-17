@@ -2,7 +2,6 @@ import { CardComponent } from "@/components/Card";
 import DataTable from "@/components/DataTable";
 import PieChart from "@/components/PieChart";
 import { columns } from "@/components/columns";
-
 import { FiDollarSign, FiPlus } from "react-icons/fi";
 import DialogAddButton from "@/components/DialogAddButton";
 import { Toaster } from "@/components/ui/toaster";
@@ -26,15 +25,6 @@ function Home() {
 
   const [dataTable, setDataTable] = useState<Tables<"expenses">[]>([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const expenses = await expensesData();
-      setDataTable(expenses);
-      console.log(expenses, "expenses");
-    };
-    fetchData();
-  }, []);
-
   const expensesData = async (): Promise<Tables<"expenses">[]> => {
     const { data: expense, error } = await supabase
       .from("expenses")
@@ -45,6 +35,15 @@ function Home() {
     }
     return expense;
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const expenses = await expensesData();
+      setDataTable(expenses);
+      console.log(expenses, "expenses");
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="relative">
