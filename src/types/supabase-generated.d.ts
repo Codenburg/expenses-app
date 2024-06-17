@@ -6,7 +6,7 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-export type Database =  {
+export type Database = {
   graphql_public: {
     Tables: {
       [_ in never]: never
@@ -34,23 +34,111 @@ export type Database =  {
   }
   public: {
     Tables: {
-      expenses: {
+      balances: {
         Row: {
-          amount: number
+          amount_available: number
+          balances_id: number
           created_at: string
-          id: number
+          user_id: string | null
         }
         Insert: {
-          amount?: number
+          amount_available: number
+          balances_id?: number
           created_at?: string
-          id?: number
+          user_id?: string | null
         }
         Update: {
-          amount?: number
+          amount_available?: number
+          balances_id?: number
           created_at?: string
-          id?: number
+          user_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "public_balances_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      categories: {
+        Row: {
+          category_id: number
+          category_name: string
+          created_at: string
+          user_id: string | null
+        }
+        Insert: {
+          category_id?: number
+          category_name?: string | null
+          created_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          category_id?: number
+          category_name?: string | null
+          created_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_categories_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      expenses: {
+        Row: {
+          category_id: number
+          created_at: string
+          expense_amount: number
+          expense_description: string | null
+          id: number
+          payment_method: Database["public"]["Enums"]["payment_methods"]
+          payment_state: Database["public"]["Enums"]["payment_state"]
+          user_id: string | null
+        }
+        Insert: {
+          category_id: number
+          created_at?: string
+          expense_amount: number
+          expense_description?: string | null
+          id?: number
+          payment_method?: Database["public"]["Enums"]["payment_methods"]
+          payment_state?: Database["public"]["Enums"]["payment_state"]
+          user_id?: string | null
+        }
+        Update: {
+          category_id?: number
+          created_at?: string
+          expense_amount?: number
+          expense_description?: string | null
+          id?: number
+          payment_method?: Database["public"]["Enums"]["payment_methods"]
+          payment_state?: Database["public"]["Enums"]["payment_state"]
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_expenses_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["category_id"]
+          },
+          {
+            foreignKeyName: "public_expenses_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
@@ -60,7 +148,9 @@ export type Database =  {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      gender: "male" | "female"
+      payment_methods: "efectivo" | "credito" | "debito" | "transferencia"
+      payment_state: "pagado" | "atrasado" | "pendiente"
     }
     CompositeTypes: {
       [_ in never]: never

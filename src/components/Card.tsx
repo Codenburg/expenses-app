@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { ReactNode, useEffect, useState } from "react";
-import { Database } from "../types/schema";
+import { Database } from "../types/supabase-generated";
 import { supabase } from "../../db/supabase";
 
 interface Props {
@@ -11,15 +11,18 @@ interface Props {
 }
 export function CardComponent({ title, IconCard, children }: Props) {
   const [amount, setAmount] =
-    useState<Database["public"]["Tables"]["expenses"]["Row"]["amount"]>();
+    useState<
+      Database["public"]["Tables"]["balances"]["Row"]["amount_available"]
+    >();
 
   useEffect(() => {
     const fetchAmount = async () => {
-      const { data: expenses, error } = await supabase
-        .from("expenses")
-        .select(`*`);
-      if (expenses && expenses.length > 0) {
-        setAmount(expenses[0].amount);
+      const { data: balances, error } = await supabase
+        .from("balances")
+        .select(`amount_available`)
+        .order("balances_id", { ascending: false });
+      if (balances && balances.length >= 0) {
+        setAmount(balances[0].amount_available);
       } else {
         console.log("error", error);
       }
