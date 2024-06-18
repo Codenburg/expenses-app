@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import useBalanceState from "@/context/useBalanceState";
 import { ReactNode, useEffect, useState } from "react";
-import { supabase } from "../../db/supabase";
 
 interface Props {
   title: string;
@@ -9,28 +9,22 @@ interface Props {
   children: ReactNode;
 }
 function CardComponent({ title, IconCard, children }: Props) {
-  const [cashAmount, setCashAmount] = useState(null);
-  const [debitAmount, setDebitAmount] = useState(null);
+  const [cashAmount, setCashAmount] = useState<string | null | undefined>(null);
+  const [debitAmount, setDebitAmount] = useState<string | null | undefined>(null);
+
+  const { balances, fetchBalances } = useBalanceState();
 
   useEffect(() => {
-    const fetchAmounts = async () => {
-      const { data: balances, error } = await supabase
-        .from("balances")
-        .select(`cash_amount_available, debit_amount_available`)
-        .order("balances_id", { ascending: false })
-        .limit(1);
-      if (balances && balances.length > 0) {
-        console.log(balances);
-        setCashAmount(balances[0].cash_amount_available);
-        setDebitAmount(balances[0].debit_amount_available);
-      } else {
-        console.log("error", error);
-      }
-    };
-    fetchAmounts();
-  }, []);
-  
-  // guardar en store el monto en debito y en efectivo
+    fetchBalances();
+  }, [fetchBalances]);
+
+  useEffect(() => {
+    const latestBalance = Object.values(balances)[0];
+    if (latestBalance) {
+      setCashAmount(latestBalance.cash_amount_available);
+      setDebitAmount(latestBalance.debit_amount_available);
+    }
+  }, [balances]);
 
   return (
     <Card className="overflow-hidden">

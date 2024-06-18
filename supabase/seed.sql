@@ -69,7 +69,7 @@ INSERT INTO
 
 INSERT INTO
     public.balances(
-        balances_id,
+        balance_id,
         user_id,
         cash_amount_available,
         debit_amount_available,
