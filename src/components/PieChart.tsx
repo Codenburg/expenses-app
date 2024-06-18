@@ -11,16 +11,19 @@ function PieChart() {
 
   const data = {
     labels: [
-      "Supermercado",
-      "Suscripciones",
       "Salud",
-      "Servicios",
+      "Supermercado",
       "Electronica",
+      "Deportes",
+      "Hogar",
+      "Cuentas",
+      "Impuestos",
+      "Indumentaria",
       "Transporte",
     ],
     datasets: [
       {
-        data: [45, 34, 67, 56, 23, 32],
+        data: [45, 34, 67, 56, 23, 32, 123, 424, 124],
         borderWidth: 3,
       },
     ],

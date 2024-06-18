@@ -1,4 +1,4 @@
-import { CardComponent } from "@/components/Card";
+import CardComponent from "@/components/Card";
 import DataTable from "@/components/DataTable";
 import PieChart from "@/components/PieChart";
 import { columns } from "@/components/columns";
@@ -40,7 +40,6 @@ function Home() {
     const fetchData = async () => {
       const expenses = await expensesData();
       setDataTable(expenses);
-      console.log(expenses, "expenses");
     };
     fetchData();
   }, []);
