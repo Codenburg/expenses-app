@@ -23,6 +23,7 @@ import {
 import { toast } from "@/components/ui/use-toast";
 import { ToastAction } from "./ui/toast";
 import { amountSchema } from "@/types/AmountSchema";
+import { supabase } from "../../db/supabase";
 
 interface FormProps {
   onOpenChange: () => void;
@@ -32,15 +33,52 @@ function AmountForm({ onOpenChange }: FormProps) {
     resolver: zodResolver(amountSchema),
     mode: "onChange",
   });
-  const onSubmit: SubmitHandler<z.infer<typeof amountSchema>> = (
+  const onSubmit: SubmitHandler<z.infer<typeof amountSchema>> = async (
     values: z.infer<typeof amountSchema>
   ) => {
     onOpenChange();
-    toast({
-      title: "Monto ingresado con éxito!",
-      duration: 2500,
-      action: <ToastAction altText="undo amount">Deshacer</ToastAction>,
-    });
+    if (values.method === "debito") {
+      const { data, error } = await supabase
+        .from("balances")
+        .insert({
+          user_id: "31d0761b-2ff0-416d-b969-a890441c0eac",
+          debit_amount_available: values.amount,
+        })
+        .select();
+      if (error) {
+        toast({
+          title: "Error al ingresar el monto!",
+          duration: 2500,
+          action: <ToastAction altText="close">Cerrar</ToastAction>,
+        });
+      }
+      toast({
+        title: `$${data} ingresados con éxito!`,
+        duration: 2500,
+        action: <ToastAction altText="undo amount">Deshacer</ToastAction>,
+      });
+    } else if (values.method === "efectivo") {
+      const { data, error } = await supabase
+        .from("balances")
+        .insert({
+          user_id: "31d0761b-2ff0-416d-b969-a890441c0eac",
+          cash_amount_available: values.amount,
+        })
+        .select();
+      if (error) {
+        toast({
+          title: "Error al ingresar el monto!",
+          duration: 2500,
+          action: <ToastAction altText="close">Cerrar</ToastAction>,
+        });
+      }
+      toast({
+        title: `$${data} ingresados con éxito!`,
+        duration: 2500,
+        action: <ToastAction altText="undo amount">Deshacer</ToastAction>,
+      });
+    }
+
     console.log("values:", values);
   };
 
