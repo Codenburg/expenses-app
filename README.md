@@ -25,6 +25,7 @@ npm install
 ```bash
 supabase init
 ```
+for more information on how to configure the environment variables, refer to the [Supabase documentation](https://supabase.com/docs/guides/cli/getting-started).
 
 4. Start the development server:
 ```bash
