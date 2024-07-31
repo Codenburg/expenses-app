@@ -1,10 +1,10 @@
 import  DashboardLayout  from "./Layout/DashboardLayout";
-import Home from "./pages/Home";
+import DashboardHome from "./pages/DashboardHome";
 
 function App() {
   return (
     <DashboardLayout>
-        <Home/>
+        <DashboardHome/>
     </DashboardLayout>
   );
 }

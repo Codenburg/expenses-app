@@ -1,6 +1,5 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "./ui/button";
 import {
   Form,
   FormControl,
@@ -8,41 +7,39 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { z } from "zod";
-import CurrencyInput from "./ui/CurrencyInput";
-import { DialogFooter } from "./ui/dialog";
-import {
+  Button,
+  DialogFooter,
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { toast } from "@/components/ui/use-toast";
-import { ToastAction } from "./ui/toast";
-import { amountSchema } from "@/types/AmountSchema";
+  ToastAction,
+  toast,
+} from "@/components/ui";
+import { z } from "zod";
+import CurrencyInput from "./ui/CurrencyInput";
+import { amountSchema } from "../lib/constants/AmountSchema";
 import { supabase } from "../../db/supabase";
 
-interface FormProps {
-  onOpenChange: () => void;
-}
-function AmountForm({ onOpenChange }: FormProps) {
+function AddBalanceForm() {
   const form = useForm<z.infer<typeof amountSchema>>({
     resolver: zodResolver(amountSchema),
     mode: "onChange",
   });
+
   const onSubmit: SubmitHandler<z.infer<typeof amountSchema>> = async (
     values: z.infer<typeof amountSchema>
   ) => {
-    onOpenChange();
     if (values.method === "debito") {
-      const { data, error } = await supabase
+      const { data, error: authError } = await supabase.auth.getSession();
+      console.log("AUTH ERROR", authError);
+      const { error } = await supabase
         .from("balances")
         .insert({
-          user_id: "31d0761b-2ff0-416d-b969-a890441c0eac",
-          debit_amount_available: values.amount,
+          user_id: data.session?.user.id,
+          debit_amount_available: parseInt(values.amount),
         })
         .select();
       if (error) {
@@ -53,16 +50,15 @@ function AmountForm({ onOpenChange }: FormProps) {
         });
       }
       toast({
-        title: `$${data} ingresados con éxito!`,
+        title: `$${values.amount} ingresados con éxito!`,
         duration: 2500,
         action: <ToastAction altText="undo amount">Deshacer</ToastAction>,
       });
     } else if (values.method === "efectivo") {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("balances")
         .insert({
-          user_id: "31d0761b-2ff0-416d-b969-a890441c0eac",
-          cash_amount_available: values.amount,
+          cash_amount_available: parseInt(values.amount),
         })
         .select();
       if (error) {
@@ -73,7 +69,7 @@ function AmountForm({ onOpenChange }: FormProps) {
         });
       }
       toast({
-        title: `$${data} ingresados con éxito!`,
+        title: `$${values.amount} ingresados con éxito!`,
         duration: 2500,
         action: <ToastAction altText="undo amount">Deshacer</ToastAction>,
       });
@@ -138,4 +134,4 @@ function AmountForm({ onOpenChange }: FormProps) {
   );
 }
 
-export default AmountForm;
+export default AddBalanceForm;

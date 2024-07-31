@@ -1,9 +1,8 @@
 import { getLatestBalances } from "@/lib/api/getLatestBalance";
-import { Balance } from "@/types/Balance";
 import { create } from "zustand";
 
 interface useBalanceStore {
-  balances: Record<string, Partial<Balance>>;
+  balances: Record<string, string>; 
   getLatestBalances: () => Promise<void>;
 }
 
