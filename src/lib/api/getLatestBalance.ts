@@ -1,5 +1,5 @@
 import { Balance } from "@/types/Balance";
-import { supabase } from "../../../db/supabase";
+import { supabase } from "db/supabase";
 
 export const getLatestBalances = async (): Promise<
   Record<string, string>
