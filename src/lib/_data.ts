@@ -1,4 +1,4 @@
-import { Expenses } from "@/types/Expenses";
+import { Expenses } from "@/lib/types/Expenses";
 
 export const expensesData: Expenses[] = [
   {

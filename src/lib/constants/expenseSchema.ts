@@ -1,6 +1,6 @@
 import { getValues } from "@/lib/functions/enum";
 import { z } from "zod";
-import { Category, Method, State } from "../../types/Expenses";
+import { Category, Method, State } from "../types/Expenses";
 
 export const expenseSchema = z.object({
   amount: z.string({

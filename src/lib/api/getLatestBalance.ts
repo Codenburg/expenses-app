@@ -1,4 +1,4 @@
-import { Balance } from "@/types/Balance";
+import { Balance } from "@/lib/types/Balance";
 import { supabase } from "db/supabase";
 
 export const getLatestBalances = async (): Promise<
