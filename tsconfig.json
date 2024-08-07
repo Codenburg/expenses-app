@@ -8,7 +8,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "db/*": ["./db/*"]
+      "db/*": ["./db/*"],
+      "types/*": ["./src/lib/types/*"]
     },
 
     /* Bundler mode */

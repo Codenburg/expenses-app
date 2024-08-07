@@ -6,43 +6,47 @@ import {
   CardTitle,
   Button,
   Input,
-  Label,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
 } from "@/components/ui";
-import { supabase } from "db/supabase";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { SignUpFormSchema } from "types/SignUpFormSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signUpNewUser } from "@/lib/api/signUpUser";
 
 export function SignUpForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+  const formInstance = useForm({
+    mode: "onChange",
+    resolver: zodResolver(SignUpFormSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+    criteriaMode: "all",
+    reValidateMode: "onChange",
+  });
 
-  const signUpNewUser = async () => {
-    const { data: user, error } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-    });
-    if (error) {
-      console.log("ERROR SIGN UP", error);
+  const onSubmit = async (values: SignUpFormSchema) => {
+    const { email, password } = values;
+    const { ...error } = await signUpNewUser(email, password);
+
+    if (error.error?.message) {
+      formInstance.setError(
+        "email",
+        { message: error.error.message },
+        { shouldFocus: true }
+      );
     }
-    console.log("USER CREATED", user);
   };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handleSubmit = async (event) => {
-    // Prevent default form submission
-    event.preventDefault();
-    await signUpNewUser();
-    navigate("/login");
-  };
-
+  
   return (
     <div className="w-full h-screen flex items-center justify-center px-4 theme-zinc">
       <Card className="mx-auto max-w-sm">
@@ -54,45 +58,98 @@ export function SignUpForm() {
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="grid gap-2">
-                <Label htmlFor="first-name">Nombre</Label>
-                <Input id="first-name" placeholder="Max" required />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="last-name">Apellido</Label>
-                <Input id="last-name" placeholder="Robinson" required />
-              </div>
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="m@example.com"
-                value={email}
-                onChange={handleEmailChange}
-                required
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="password">Contraseña</Label>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={handlePasswordChange}
-                required
-              />
-            </div>
-            <Button type="submit" className="w-full" onClick={handleSubmit}>
-              Crear una cuenta
-            </Button>
-
+            <Form {...formInstance}>
+              <form onSubmit={formInstance.handleSubmit(onSubmit)}>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="grid gap-2">
+                    <FormField
+                      control={formInstance.control}
+                      name="firstName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Nombre</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Max" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <FormField
+                      control={formInstance.control}
+                      name="lastName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Apellido</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Robinson" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
+                <div className="grid gap-2">
+                  <FormField
+                    control={formInstance.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="maxrobinson@gmail.com"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <FormField
+                    control={formInstance.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Contraseña</FormLabel>
+                        <FormControl>
+                          <Input type="password" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="grid gap-4">
+                  <FormField
+                    control={formInstance.control}
+                    name="confirmPassword"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Confirmar contraseña</FormLabel>
+                        <FormControl>
+                          <Input type="password" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button type="submit" className="w-full">
+                    Crear una cuenta
+                  </Button>
+                </div>
+              </form>
+            </Form>
             <Button variant="outline" className="w-full">
               Ingresar con Google (próximamente)
             </Button>
           </div>
+
           <div className="mt-4 text-center text-sm">
             Ya tienes una cuenta?{" "}
             <Link to="/login" className="underline">

@@ -4,10 +4,14 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [react()],
+  build: {
+    sourcemap: true,
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
       "db": path.resolve(__dirname, "./db"),
+      "types": path.resolve(__dirname, "./src/lib/types"),
     },
   },
 });
