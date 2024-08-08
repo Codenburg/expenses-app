@@ -1,9 +1,23 @@
 import { supabase } from "db/supabase";
 
-export const signUpNewUser = async (email: string, password: string) => {
-  const { error } = await supabase.auth.signUp({
+interface SignUpUser {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+}
+export const signUpNewUser = async (
+  { email, password, firstName, lastName }: SignUpUser,
+) => {
+  const { error} = await supabase.auth.signUp({
     email: email,
     password: password,
+    options: {
+      data: {
+        firstName: firstName,
+        lastName: lastName,
+      },
+    },
   });
   return { error };
 };

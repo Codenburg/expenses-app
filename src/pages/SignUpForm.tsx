@@ -12,14 +12,18 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  PasswordInput,
+  useToast,
 } from "@/components/ui";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { SignUpFormSchema } from "types/SignUpFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpNewUser } from "@/lib/api/signUpUser";
+import { useNavigate } from "react-router-dom";
 
 export function SignUpForm() {
+  const { toast } = useToast();
   const formInstance = useForm({
     mode: "onChange",
     resolver: zodResolver(SignUpFormSchema),
@@ -33,20 +37,31 @@ export function SignUpForm() {
     criteriaMode: "all",
     reValidateMode: "onChange",
   });
-
+  const navigate = useNavigate();
   const onSubmit = async (values: SignUpFormSchema) => {
-    const { email, password } = values;
-    const { ...error } = await signUpNewUser(email, password);
-
+    const { email, password, firstName, lastName } = values;
+    const { ...error } = await signUpNewUser({
+      email,
+      password,
+      firstName,
+      lastName,
+    });
     if (error.error?.message) {
       formInstance.setError(
         "email",
         { message: error.error.message },
         { shouldFocus: true }
       );
+      return;
     }
+    navigate("/");
+    toast({
+      title: "¡Registro exitoso!",
+      description: `${firstName} ${lastName} te has registrado con éxito`,
+      duration: 3000,
+    });
   };
-  
+
   return (
     <div className="w-full h-screen flex items-center justify-center px-4 theme-zinc">
       <Card className="mx-auto max-w-sm">
@@ -118,7 +133,7 @@ export function SignUpForm() {
                       <FormItem>
                         <FormLabel>Contraseña</FormLabel>
                         <FormControl>
-                          <Input type="password" {...field} />
+                          <PasswordInput id="password" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -133,7 +148,7 @@ export function SignUpForm() {
                       <FormItem>
                         <FormLabel>Confirmar contraseña</FormLabel>
                         <FormControl>
-                          <Input type="password" {...field} />
+                          <PasswordInput id="confirmPassword" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
