@@ -1,4 +1,4 @@
-import { getValues } from "@/lib/enum";
+import { getValues } from "@/lib/functions/enum";
 
 export type Expenses = {
   readonly id: string;

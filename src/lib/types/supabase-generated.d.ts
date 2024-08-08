@@ -36,21 +36,24 @@ export type Database = {
     Tables: {
       balances: {
         Row: {
-          amount_available: number
-          balances_id: number
+          balance_id: number
+          cash_amount_available: number | null
           created_at: string
+          debit_amount_available: number | null
           user_id: string | null
         }
         Insert: {
-          amount_available: number
-          balances_id?: number
+          balance_id?: number
+          cash_amount_available?: number | null
           created_at?: string
+          debit_amount_available?: number | null
           user_id?: string | null
         }
         Update: {
-          amount_available?: number
-          balances_id?: number
+          balance_id?: number
+          cash_amount_available?: number | null
           created_at?: string
+          debit_amount_available?: number | null
           user_id?: string | null
         }
         Relationships: [
@@ -66,7 +69,7 @@ export type Database = {
       categories: {
         Row: {
           category_id: number
-          category_name: string
+          category_name: string | null
           created_at: string
           user_id: string | null
         }
@@ -148,6 +151,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      balances_methods: "debito" | "efectivo"
       gender: "male" | "female"
       payment_methods: "efectivo" | "credito" | "debito" | "transferencia"
       payment_state: "pagado" | "atrasado" | "pendiente"

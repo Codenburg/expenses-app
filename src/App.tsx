@@ -1,10 +1,11 @@
-import Home from "./pages/Home";
+import  DashboardLayout  from "./Layout/DashboardLayout";
+import DashboardHome from "./pages/DashboardHome";
 
 function App() {
   return (
-    <main className="bg-white shadow-lg flex-1 pt-8 container pr-20 pl-20">
-      <Home />
-    </main>
+    <DashboardLayout>
+        <DashboardHome/>
+    </DashboardLayout>
   );
 }
 

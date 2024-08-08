@@ -1,4 +1,6 @@
-import CurrencyInputField, { CurrencyInputProps } from 'react-currency-input-field';
+import CurrencyInputField, {
+  CurrencyInputProps,
+} from "react-currency-input-field";
 
 const CurrencyInput = ({ value, onValueChange }: CurrencyInputProps) => {
   return (
@@ -7,7 +9,7 @@ const CurrencyInput = ({ value, onValueChange }: CurrencyInputProps) => {
       value={value}
       onValueChange={onValueChange}
       transformRawValue={(value) => {
-        return value.replace('.', ',');
+        return value.replace(".", ",");
       }}
       allowDecimals
       decimalSeparator=","
@@ -15,7 +17,7 @@ const CurrencyInput = ({ value, onValueChange }: CurrencyInputProps) => {
       prefix="$"
       decimalsLimit={2}
       maxLength={15}
-      placeholder='Ej: 100 000'
+      placeholder="Ej: 100 000"
     />
   );
 };
