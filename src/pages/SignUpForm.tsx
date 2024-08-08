@@ -14,6 +14,7 @@ import {
   FormMessage,
   PasswordInput,
   useToast,
+  ButtonLoading,
 } from "@/components/ui";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -54,7 +55,7 @@ export function SignUpForm() {
       );
       return;
     }
-    navigate("/");
+    navigate("/login");
     toast({
       title: "¡Registro exitoso!",
       description: `${firstName} ${lastName} te has registrado con éxito`,
@@ -154,9 +155,13 @@ export function SignUpForm() {
                       </FormItem>
                     )}
                   />
-                  <Button type="submit" className="w-full">
-                    Crear una cuenta
-                  </Button>
+                  {formInstance.formState.isSubmitting ? (
+                    <ButtonLoading />
+                  ) : (
+                    <Button type="submit" className="w-full">
+                      Crear una cuenta
+                    </Button>
+                  )}
                 </div>
               </form>
             </Form>
