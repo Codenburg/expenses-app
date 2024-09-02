@@ -9,14 +9,14 @@ export type Expenses = {
   method: Method;
 };
 
-export const State = {
-  pendiente: "pendiente",
-  atrasado: "atrasado",
-  pagado: "pagado",
+const State = {
+  Pendiente: "pendiente",
+  Atrasado: "atrasado",
+  Pagado: "pagado",
 } as const;
 export type State = (typeof State)[keyof typeof State];
 
-export const Category = {
+const Category = {
   Salud: "salud",
   Supermercado: "supermercado",
   Electronica: "electronica",
@@ -29,10 +29,10 @@ export const Category = {
 } as const;
 export type Category = (typeof Category)[keyof typeof Category];
 
-export const Method = {
-  debito: "debito",
-  credito: "credito",
-  efectivo: "efectivo",
+const Method = {
+  Debito: "debito",
+  Credito: "credito",
+  Efectivo: "efectivo",
 } as const;
 export type Method = (typeof Method)[keyof typeof Method];
 

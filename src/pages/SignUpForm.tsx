@@ -16,12 +16,11 @@ import {
   useToast,
   ButtonLoading,
 } from "@/components/ui";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { SignUpFormSchema } from "types/SignUpFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpNewUser } from "@/lib/api/signUpUser";
-import { useNavigate } from "react-router-dom";
 
 export function SignUpForm() {
   const { toast } = useToast();

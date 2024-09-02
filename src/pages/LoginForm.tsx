@@ -6,54 +6,132 @@ import {
   CardHeader,
   CardTitle,
   Input,
-  Label,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  PasswordInput,
+  useToast,
+  ButtonLoading,
 } from "@/components/ui";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { loginUser } from "@/lib/api/loginUser";
+import { LoginUserFormSchema } from "types/LoginUserFormSchema";
+import { ErrorMessage } from "@hookform/error-message";
+import { getUser } from "@/lib/api/getUser";
 export function LoginForm() {
+  const formInstance = useForm({
+    mode: "onSubmit",
+    resolver: zodResolver(LoginUserFormSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    criteriaMode: "all",
+    reValidateMode: "onSubmit",
+  });
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const onSubmit = async (values: LoginUserFormSchema) => {
+    const { email, password } = values;
+    const { ...error } = await loginUser({ email, password });
+    if (error.error?.status === 400) {
+      formInstance.setError("root", {
+        message: "Email o Contraseña incorrectos",
+      });
+      return;
+    }
+    navigate("/");
+    toast({
+      //improve this to get the user name 
+      title: `Hola ${(await getUser()).user_metadata.firstName}!👋`,
+      duration: 3000,
+    });
+  };
+
   return (
     <div className="w-full h-screen flex items-center justify-center px-4 theme-zinc">
       <Card className="mx-auto max-w-sm">
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            Ingresa tu email y contraseña para iniciar sesión
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="m@example.com"
-                required
-              />
+          <form onSubmit={formInstance.handleSubmit(onSubmit)}>
+            <div className="grid gap-4">
+              <Form {...formInstance}>
+                <div className="grid gap-2">
+                  <FormField
+                    control={formInstance.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input placeholder="m@example.com" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <div className="grid gap-2">
+                  <FormField
+                    control={formInstance.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Contraseña</FormLabel>
+                        <FormControl>
+                          <PasswordInput id="password" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <ErrorMessage
+                    name="root"
+                    render={({ message }) => (
+                      <p className="mt-2 text-sm text-red-500">{message}</p>
+                    )}
+                  />
+                  <Link
+                    to="/reset-password"
+                    className="ml-auto inline-block text-sm underline"
+                  >
+                    Forgot your password?
+                  </Link>
+                  {/* add recovery password feature */}
+                </div>
+              </Form>
+              {formInstance.formState.isSubmitting ? (
+                <ButtonLoading />
+              ) : (
+                <Button type="submit" className="w-full">
+                  Iniciar sesión
+                </Button>
+              )}
+
+              <Button variant="outline" className="w-full">
+                Login with Google
+              </Button>
             </div>
-            <div className="grid gap-2">
-              <div className="flex items-center">
-                <Label htmlFor="password">Password</Label>
-                {/* add recovery password feature */}
-                <Link to="/reset-password" className="ml-auto inline-block text-sm underline">
-                  Forgot your password?
-                </Link>
-              </div>
-              <Input id="password" type="password" required />
+
+            <div className="mt-4 text-center text-sm">
+              No tienes una cuenta?{" "}
+              <Link to="/sign-up" className="underline">
+                Sign up
+              </Link>
             </div>
-            <Button type="submit" className="w-full">
-              Login
-            </Button>
-            <Button variant="outline" className="w-full">
-              Login with Google
-            </Button>
-          </div>
-          <div className="mt-4 text-center text-sm">
-            Don&apos;t have an account?{" "}
-            <Link to="/sign-up" className="underline">
-              Sign up
-            </Link>
-          </div>
+          </form>
         </CardContent>
       </Card>
     </div>
