@@ -15,6 +15,8 @@ export const router = createBrowserRouter([
       }
       return null;
     },
+    children: [
+    ]
   },
   {
     path: "/login",
