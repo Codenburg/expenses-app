@@ -16,6 +16,7 @@ import {
   SheetTrigger,
 } from "@/components/ui";
 import { getUser } from "@/lib/api/getUser";
+import { logoutUser } from "@/lib/api/logoutUser";
 import { User } from "@supabase/supabase-js";
 import {
   HistoryIcon,
@@ -116,7 +117,7 @@ function DashboardHeader() {
             className="overflow-hidden rounded-full"
           >
             <img
-              src={`https://robohash.org/${user?.user_metadata.firtsName}.svg/?set=set4`}
+              src={`https://robohash.org/${user?.user_metadata.firstName}.svg/?set=set4`}
               width={36}
               height={36}
               alt="Avatar"
@@ -130,7 +131,7 @@ function DashboardHeader() {
           <DropdownMenuItem>Settings</DropdownMenuItem>
           <DropdownMenuItem>Support</DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Logout</DropdownMenuItem>
+          <DropdownMenuItem onClick={logoutUser}>Logout</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </header>
