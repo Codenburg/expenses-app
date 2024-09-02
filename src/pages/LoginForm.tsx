@@ -47,7 +47,7 @@ export function LoginForm() {
     }
     navigate("/");
     toast({
-      //improve this to get the user name 
+      //improve this to get the user name
       title: `Hola ${(await getUser()).user_metadata.firstName}!👋`,
       duration: 3000,
     });
@@ -107,7 +107,7 @@ export function LoginForm() {
                     to="/reset-password"
                     className="ml-auto inline-block text-sm underline"
                   >
-                    Forgot your password?
+                    Olvidaste tu contraseña?
                   </Link>
                   {/* add recovery password feature */}
                 </div>
@@ -120,15 +120,15 @@ export function LoginForm() {
                 </Button>
               )}
 
-              <Button variant="outline" className="w-full">
+              {/* <Button variant="outline" className="w-full">
                 Login with Google
-              </Button>
+              </Button> */}
             </div>
 
             <div className="mt-4 text-center text-sm">
               No tienes una cuenta?{" "}
               <Link to="/sign-up" className="underline">
-                Sign up
+                Crear cuenta
               </Link>
             </div>
           </form>

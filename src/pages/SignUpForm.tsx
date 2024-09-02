@@ -164,9 +164,9 @@ export function SignUpForm() {
                 </div>
               </form>
             </Form>
-            <Button variant="outline" className="w-full">
+            {/* <Button variant="outline" className="w-full">
               Ingresar con Google (próximamente)
-            </Button>
+            </Button> */}
           </div>
 
           <div className="mt-4 text-center text-sm">

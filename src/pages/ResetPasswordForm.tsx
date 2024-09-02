@@ -17,8 +17,8 @@ export default function ResetPasswordForm() {
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl">Reset Password</CardTitle>
           <CardDescription>
-            Enter your email address below and we'll send you instructions to
-            reset your password.
+            Ingresa tu correo electrónico para recibir un enlace para
+            restablecer tu contraseña
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -33,12 +33,12 @@ export default function ResetPasswordForm() {
               />
             </div>
             <Button type="submit" className="w-full">
-              Reset Password
+              Restablecer Contraseña
             </Button>
           </form>
           <Link to="/login" className="font-semibold underline text-sm">
-          ← Back to login
-            </Link>
+            ← Volver al inicio
+          </Link>
         </CardContent>
       </Card>
     </div>
