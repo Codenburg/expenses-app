@@ -3,6 +3,7 @@ import { LoginForm, SignUpForm } from "@/pages";
 import App from "../App.tsx";
 import ResetPasswordForm from "@/pages/ResetPasswordForm.tsx";
 import { getUser } from "@/lib/api/getUser.ts";
+import ConfirmEmail from "@/pages/ConfirmEmail.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -15,8 +16,7 @@ export const router = createBrowserRouter([
       }
       return null;
     },
-    children: [
-    ]
+    children: [],
   },
   {
     path: "/login",
@@ -25,6 +25,10 @@ export const router = createBrowserRouter([
   {
     path: "/sign-up",
     element: <SignUpForm />,
+  },
+  {
+    path: "confirm-email",
+    element: <ConfirmEmail />,
   },
   {
     path: "/reset-password",

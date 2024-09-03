@@ -54,7 +54,7 @@ export function LoginForm() {
   };
 
   return (
-    <div className="w-full h-screen flex items-center justify-center px-4 theme-zinc">
+    <div className="w-full h-screen flex items-center justify-center px-4 theme-zinc bg-gray-100">
       <Card className="mx-auto max-w-sm">
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>

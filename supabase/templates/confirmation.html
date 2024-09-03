@@ -1,0 +1,86 @@
+<html>
+
+<body>
+    <h2>Confirma tu cuenta de Expenses App ✅</h2>
+
+</body>
+
+</html>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .content {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 5px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #6c757d;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://via.placeholder.com/150x50" alt="Codenburg Logo" style="max-width: 100%;">
+        </div>
+        <div class="content">
+            <h1>Confirma tu Email</h1>
+            <p>Hola {{ .Data.firstName }} {{ .Data.lastName }}! </p>
+            <p>Gracias por iniciar sesion en Expenses App. Por favor, confirme su Email haciendo clic en el botón de
+                abajo:</p>
+            <p style="text-align: center;">
+                <a href="{{ .ConfirmationURL }}" class="button">Confirmar Email</a>
+            </p>
+            <p>Si no ha iniciado sesión en Expenses App, puede ignorar este correo.</p>
+            <p>Saludos,<br>Codenburg</p>
+        </div>
+        <div class="footer">
+            <p> Este email fue enviado a {{ .Data.email }}. Si prefiere no recibir correos de este tipo, puede <a
+                    href="[Unsubscribe Link]">Desuscribirse</a>.</p>
+            <!-- <p>&copy; 2023 []. All rights reserved.</p> -->
+        </div>
+    </div>
+</body>
+
+</html>

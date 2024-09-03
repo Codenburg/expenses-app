@@ -13,17 +13,15 @@ import {
   FormLabel,
   FormMessage,
   PasswordInput,
-  useToast,
   ButtonLoading,
 } from "@/components/ui";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { SignUpFormSchema } from "types/SignUpFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpNewUser } from "@/lib/api/signUpUser";
 
 export function SignUpForm() {
-  const { toast } = useToast();
   const formInstance = useForm({
     mode: "onChange",
     resolver: zodResolver(SignUpFormSchema),
@@ -46,7 +44,7 @@ export function SignUpForm() {
       firstName,
       lastName,
     });
-    if (error.error?.message) {
+    if (error.error) {
       formInstance.setError(
         "email",
         { message: error.error.message },
@@ -54,16 +52,11 @@ export function SignUpForm() {
       );
       return;
     }
-    navigate("/login");
-    toast({
-      title: "¡Registro exitoso!",
-      description: `${firstName} ${lastName} te has registrado con éxito`,
-      duration: 3000,
-    });
+    navigate("/confirm-email");
   };
 
   return (
-    <div className="w-full h-screen flex items-center justify-center px-4 theme-zinc">
+    <div className="w-full h-screen flex items-center justify-center px-4 theme-zinc bg-gray-100">
       <Card className="mx-auto max-w-sm">
         <CardHeader>
           <CardTitle className="text-xl">Registrarse</CardTitle>

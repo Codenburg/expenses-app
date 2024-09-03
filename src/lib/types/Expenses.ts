@@ -36,6 +36,6 @@ const Method = {
 } as const;
 export type Method = (typeof Method)[keyof typeof Method];
 
-export const estados = getValues(State);
-export const categorias = getValues(Category);
-export const metodos = getValues(Method);
+export const States = getValues(State);
+export const Categories = getValues(Category);
+export const Methods = getValues(Method);

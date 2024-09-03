@@ -9,10 +9,11 @@ interface SignUpUser {
 export const signUpNewUser = async (
   { email, password, firstName, lastName }: SignUpUser,
 ) => {
-  const { error} = await supabase.auth.signUp({
+  const { error } = await supabase.auth.signUp({
     email: email,
     password: password,
     options: {
+      emailRedirectTo: "http://localhost:5173/",
       data: {
         firstName: firstName,
         lastName: lastName,
