@@ -23,6 +23,7 @@ import { loginUser } from "@/lib/api/loginUser";
 import { LoginUserFormSchema } from "types/LoginUserFormSchema";
 import { ErrorMessage } from "@hookform/error-message";
 import { getUser } from "@/lib/api/getUser";
+
 export function LoginForm() {
   const formInstance = useForm({
     mode: "onSubmit",
@@ -52,7 +53,7 @@ export function LoginForm() {
       duration: 3000,
     });
   };
-
+    
   return (
     <div className="w-full h-screen flex items-center justify-center px-4 theme-zinc bg-gray-100">
       <Card className="mx-auto max-w-sm">

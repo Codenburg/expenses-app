@@ -7,6 +7,7 @@ function DashboardHome() {
       <div className="space-y-4 pb-6 pt-6">
         <CardBalances />
       </div>
+      
       <Toaster />
     </>
   );
