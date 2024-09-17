@@ -3,9 +3,10 @@ This is a simple expenses app that allows users to track their expenses and cate
 
 ## Features
 - User authentication with Supabase Auth
-- Balance tracking with Supabase Database
-- Expense tracking with Supabase Database
-- Expense categorization with Supabase Database
+- Email confirmation
+- Balances tracking with Supabase Database
+- Expenses tracking with Supabase Database
+- Expenses categorization with Supabase Database
 
 
 ## Getting Started
@@ -34,7 +35,4 @@ npm run dev
 
 ## Contributing
 We welcome contributions to this project! If you have any suggestions or ideas, please open an issue or submit a pull request.
-
-## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 

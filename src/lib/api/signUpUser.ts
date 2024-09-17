@@ -9,7 +9,7 @@ interface SignUpUser {
 export const signUpNewUser = async (
   { email, password, firstName, lastName }: SignUpUser,
 ) => {
-  const { error } = await supabase.auth.signUp({
+  const { error, data } = await supabase.auth.signUp({
     email: email,
     password: password,
     options: {
@@ -20,5 +20,5 @@ export const signUpNewUser = async (
       },
     },
   });
-  return { error };
+  return { error, data };
 };

@@ -36,23 +36,24 @@ export function SignUpForm() {
     reValidateMode: "onChange",
   });
   const navigate = useNavigate();
+
   const onSubmit = async (values: SignUpFormSchema) => {
     const { email, password, firstName, lastName } = values;
-    const { ...error } = await signUpNewUser({
+    const { error, data } = await signUpNewUser({
       email,
       password,
       firstName,
       lastName,
     });
-    if (error.error) {
+    if (error) {
       formInstance.setError(
         "email",
-        { message: error.error.message },
+        { message: error.message },
         { shouldFocus: true }
       );
-      return;
+      return null;
     }
-    navigate("/confirm-email");
+    navigate("/confirm-email", { state: { email: data.user?.email } });
   };
 
   return (

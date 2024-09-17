@@ -1,18 +1,38 @@
-import { Button } from "@/components/ui/button";
 import {
+  Toaster,
+  useToast,
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+  Button,
+} from "@/components";
+import { supabase } from "db/supabase";
 import { MailCheck } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function ConfirmEmail() {
-  const handleResendEmail = () => {
-    // TODO: Implement the logic to resend the confirmation email
-    console.log("Resending confirmation email...");
+  const { state } = useLocation();
+  const { toast } = useToast();
+
+  const handleForwardEmail = async () => {
+    const { error } = await supabase.auth.resend({
+      type: "signup",
+      email: state.email,
+      options: { emailRedirectTo: "http://localhost:5173/" },
+    });
+    toast({
+      title: `Se ha reenviado el correo de confirmación a ${state.email} 👍`,
+      duration: 3000,
+    });
+    if (error) {
+      toast({
+        title: `Error al reenviar el correo de confirmación a ${state.email}`,
+        duration: 3000,
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -34,16 +54,18 @@ function ConfirmEmail() {
           </p>
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
-          <Button className="w-full" onClick={handleResendEmail}>
+          <Button className="w-full" onClick={handleForwardEmail}>
             Reenviar correo de confirmación
           </Button>
           <Link
             to={"/login"}
             className="text-sm text-muted-foreground hover:text-primary"
-          >Volver al inicio</Link>
-          
+          >
+            Volver al inicio
+          </Link>
         </CardFooter>
       </Card>
+      <Toaster />
     </div>
   );
 }
