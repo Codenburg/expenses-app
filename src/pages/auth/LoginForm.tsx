@@ -15,6 +15,7 @@ import {
   PasswordInput,
   useToast,
   ButtonLoading,
+  CardFooter,
 } from "@/components/ui";
 import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -23,6 +24,7 @@ import { loginUser } from "@/lib/api/loginUser";
 import { LoginUserFormSchema } from "types/LoginUserFormSchema";
 import { ErrorMessage } from "@hookform/error-message";
 import { getUser } from "@/lib/api/getUser";
+import { supabase } from "db/supabase";
 
 export function LoginForm() {
   const formInstance = useForm({
@@ -53,14 +55,32 @@ export function LoginForm() {
       duration: 3000,
     });
   };
-    
+  const onAnonymousLogin = async () => {
+    const { error, data } = await supabase.auth.signInAnonymously();
+    if (error) {
+      console.log(error);
+      toast({
+        title: "Error al iniciar sesión anónimo",
+        duration: 3000,
+      });
+      return null;
+    }
+    navigate("/");
+    console.log("anonymouse data:", data);
+    toast({
+      title: `¡bienvenido! Iniciaste sesion como anónimo.`,
+      duration: 3000,
+    });
+  };
+
   return (
     <div className="w-full h-screen flex items-center justify-center px-4 theme-zinc bg-gray-100">
       <Card className="mx-auto max-w-sm">
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
           <CardDescription>
-            Ingresa tu email y contraseña para iniciar sesión
+            Ingresa tu email y contraseña para iniciar sesión o continua como
+            anónimo
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -125,15 +145,23 @@ export function LoginForm() {
                 Login with Google
               </Button> */}
             </div>
-
-            <div className="mt-4 text-center text-sm">
-              No tienes una cuenta?{" "}
-              <Link to="/sign-up" className="underline">
-                Crear cuenta
-              </Link>
-            </div>
           </form>
         </CardContent>
+        <CardFooter className="flex flex-col space-y-4">
+          <Button
+            variant="outline"
+            className="w-full"
+            onClick={onAnonymousLogin}
+          >
+            Continuar como anónimo
+          </Button>
+          <div className=" text-center text-sm">
+            No tienes una cuenta?{" "}
+            <Link to="/sign-up" className="underline">
+              Crear cuenta
+            </Link>
+          </div>
+        </CardFooter>
       </Card>
     </div>
   );

@@ -1,4 +1,4 @@
-import  DashboardLayout  from "./Layout/Dashboard";
+import  DashboardLayout  from "./layout/Dashboard";
 import DashboardHome from "./pages/DashboardHome";
 
 function App() {

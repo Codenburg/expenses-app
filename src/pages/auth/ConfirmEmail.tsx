@@ -28,7 +28,7 @@ function ConfirmEmail() {
     });
     if (error) {
       toast({
-        title: `Error al reenviar el correo de confirmación a ${state.email}`,
+        title: `Error al reenviar el correo de confirmación`,
         duration: 3000,
         variant: "destructive",
       });
