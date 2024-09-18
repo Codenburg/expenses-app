@@ -8,6 +8,8 @@ export * from './api/signUpUser';
 export * from './cnutils';
 export * from './constants/AmountSchema';
 export * from './constants/expenseSchema';
+export * from './emails/confirmation-email';
+export * from './emails/send-email-confirmation';
 export * from './functions/enum';
 export * from './types/Balance';
 export * from './types/Expenses';
