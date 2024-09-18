@@ -1,5 +1,5 @@
 import { Resend } from "resend";
-import ConfirmationEmail from "./ConfirmationEmail";
+import ConfirmationEmail from "./confirmation-email";
 
 const resend = new Resend(import.meta.env.VITE_RESEND_API_KEY);
 

@@ -24,7 +24,7 @@ import { loginUser } from "@/lib/api/loginUser";
 import { LoginUserFormSchema } from "types/LoginUserFormSchema";
 import { ErrorMessage } from "@hookform/error-message";
 import { getUser } from "@/lib/api/getUser";
-import { supabase } from "db/supabase";
+import AnonymousSignInButton from "./anonymous-sign-in-button";
 
 export function LoginForm() {
   const formInstance = useForm({
@@ -52,23 +52,6 @@ export function LoginForm() {
     toast({
       //improve this to get the user name
       title: `Hola ${(await getUser()).user_metadata.firstName}!👋`,
-      duration: 3000,
-    });
-  };
-  const onAnonymousLogin = async () => {
-    const { error, data } = await supabase.auth.signInAnonymously();
-    if (error) {
-      console.log(error);
-      toast({
-        title: "Error al iniciar sesión anónimo",
-        duration: 3000,
-      });
-      return null;
-    }
-    navigate("/");
-    console.log("anonymouse data:", data);
-    toast({
-      title: `¡bienvenido! Iniciaste sesion como anónimo.`,
       duration: 3000,
     });
   };
@@ -148,13 +131,7 @@ export function LoginForm() {
           </form>
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
-          <Button
-            variant="outline"
-            className="w-full"
-            onClick={onAnonymousLogin}
-          >
-            Continuar como anónimo
-          </Button>
+          <AnonymousSignInButton />
           <div className=" text-center text-sm">
             No tienes una cuenta?{" "}
             <Link to="/sign-up" className="underline">

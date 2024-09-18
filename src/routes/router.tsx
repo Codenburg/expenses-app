@@ -1,9 +1,9 @@
 import { createBrowserRouter, redirect } from "react-router-dom";
 import { LoginForm, SignUpForm } from "@/pages";
 import App from "../App.tsx";
-import ResetPasswordForm from "@/pages/auth/ResetPasswordForm.tsx";
+import ResetPasswordForm from "@/pages/auth/reset-passwordForm.tsx";
 import { getUser } from "@/lib/api/getUser.ts";
-import ConfirmEmail from "@/pages/auth/ConfirmEmail.tsx";
+import ConfirmEmail from "@/pages/auth/confirm-email.tsx";
 
 export const router = createBrowserRouter([
   {

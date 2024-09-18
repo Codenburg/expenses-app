@@ -7,7 +7,7 @@ import {
   TooltipProvider,
 } from "@/components/ui";
 import { ReactNode } from "react";
-import DashboardHeader from "@/components/DashboardHeader";
+import DashboardHeader from "@/components/dashboard-header";
 
 function DashboardLayout({ children }: { children: ReactNode }) {
   return (

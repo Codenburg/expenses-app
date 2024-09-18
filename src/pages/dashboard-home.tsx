@@ -1,5 +1,5 @@
 import { Toaster } from "@/components/ui/toaster";
-import CardBalances from "@/components/CardBalances";
+import CardBalances from "@/components/card-balances"
 
 function DashboardHome() {
   return (
