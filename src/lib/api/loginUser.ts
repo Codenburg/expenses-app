@@ -1,3 +1,4 @@
+import { AuthError, User } from "@supabase/supabase-js";
 import { supabase } from "db/supabase";
 
 interface loginUser {
@@ -5,13 +6,15 @@ interface loginUser {
   password: string;
 }
 
-export const loginUser = async ({ email, password }: loginUser) => {
-  const { data, error } = await supabase.auth.signInWithPassword({
+export const loginUser = async (
+  { email, password }: loginUser,
+): Promise<{ user: User | null; error: AuthError | null }> => {
+  const { data: { user }, error } = await supabase.auth.signInWithPassword({
     email: email,
     password: password,
   });
   if (error) {
-    return { error };
+    return { user: null, error };
   }
-  return { data };
+  return { user: user, error: null };
 };

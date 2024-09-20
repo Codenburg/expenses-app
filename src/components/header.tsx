@@ -17,7 +17,7 @@ import {
 } from "@/components/ui";
 import { getUser } from "@/lib/api/getUser";
 import { logoutUser } from "@/lib/api/logoutUser";
-import { User } from "@supabase/supabase-js";
+import { UserMetadata } from "@supabase/supabase-js";
 import {
   HistoryIcon,
   Home,
@@ -31,14 +31,13 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 function DashboardHeader() {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserMetadata | null>(null);
 
   useEffect(() => {
     const fetchUser = async () => {
-      const retrievedUser = await getUser();
-      setUser(retrievedUser);
+      const { metadata } = await getUser();
+      setUser(metadata);
     };
-
     fetchUser();
   }, []);
 
@@ -117,7 +116,7 @@ function DashboardHeader() {
             className="overflow-hidden rounded-full"
           >
             <img
-              src={`https://robohash.org/${user?.user_metadata.firstName}.svg/?set=set4`}
+              src={`https://robohash.org/${user?.firstName}.svg/?set=set4`}
               width={36}
               height={36}
               alt="Avatar"

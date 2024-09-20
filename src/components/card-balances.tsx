@@ -5,33 +5,12 @@ import {
   CardDescription,
   Button,
 } from "@/components/ui";
-import useBalanceState from "@/context/useBalanceStore";
-import { useEffect, useState } from "react";
-
-interface BalanceState {
-  cash_amount_available: string | null;
-  debit_amount_available: string | null;
-}
 
 function CardBalances() {
-  //mejorar el useState para que sea un objeto con las propiedades debit_amount_available y cash_amount_available y que se actualice cuando se actualice el balance
-
-  const [balance, setBalance] = useState<BalanceState>({
-    cash_amount_available: null,
-    debit_amount_available: null,
-  });
-
-  const { balances } = useBalanceState();
-
-  useEffect(() => {
-    if (balances.cash_amount_available && balances.debit_amount_available) {
-      setBalance({
-        cash_amount_available: balances.cash_amount_available,
-        debit_amount_available: balances.debit_amount_available,
-      });
-    }
-  }, [balances]);
-
+  const balance = {
+    cash_amount_available: 45231.89,
+    debit_amount_available: 12345.67,
+  };
   return (
     <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
       <Card>

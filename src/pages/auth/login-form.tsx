@@ -1,21 +1,20 @@
 import {
   Button,
+  ButtonLoading,
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
-  Input,
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
+  Input,
   PasswordInput,
-  useToast,
-  ButtonLoading,
-  CardFooter,
 } from "@/components/ui";
 import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -23,10 +22,10 @@ import { useForm } from "react-hook-form";
 import { loginUser } from "@/lib/api/loginUser";
 import { LoginUserFormSchema } from "types/LoginUserFormSchema";
 import { ErrorMessage } from "@hookform/error-message";
-import { getUser } from "@/lib/api/getUser";
 import AnonymousSignInButton from "./anonymous-sign-in-button";
 
 export function LoginForm() {
+  const navigate = useNavigate();
   const formInstance = useForm({
     mode: "onSubmit",
     resolver: zodResolver(LoginUserFormSchema),
@@ -37,23 +36,17 @@ export function LoginForm() {
     criteriaMode: "all",
     reValidateMode: "onSubmit",
   });
-  const navigate = useNavigate();
-  const { toast } = useToast();
+
   const onSubmit = async (values: LoginUserFormSchema) => {
     const { email, password } = values;
-    const { ...error } = await loginUser({ email, password });
-    if (error.error?.status === 400) {
+    const { error } = await loginUser({ email, password });
+    if (error?.status === 400) {
       formInstance.setError("root", {
         message: "Email o Contraseña incorrectos",
       });
-      return;
+      return null;
     }
     navigate("/");
-    toast({
-      //improve this to get the user name
-      title: `Hola ${(await getUser()).user_metadata.firstName}!👋`,
-      duration: 3000,
-    });
   };
 
   return (

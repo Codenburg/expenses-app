@@ -22,7 +22,6 @@ export default function AnonymousSignInButton() {
   const onAnonymousLogin = async () => {
     const { error, data } = await supabase.auth.signInAnonymously();
     if (error) {
-      console.log(error);
       toast({
         title: "Error al iniciar sesión anónimo",
         duration: 3000,
@@ -32,7 +31,7 @@ export default function AnonymousSignInButton() {
     navigate("/");
     console.log("anonymouse data:", data);
     toast({
-      title: `¡bienvenido! Iniciaste sesion como anónimo.`,
+      title: `¡Bienvenido! Iniciaste sesion como anónimo.`,
       duration: 3000,
     });
   };
@@ -41,7 +40,7 @@ export default function AnonymousSignInButton() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline" className="w-full">
-          Iniciar sesión anónimo
+          Iniciar sesión como anónimo
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
@@ -51,8 +50,8 @@ export default function AnonymousSignInButton() {
             Inicio de sesión anónimo
           </DialogTitle>
           <DialogDescription>
-            Iniciarás sesión de forma anónima, lo que limita tus funciones. Crea
-            una cuenta para obtener acceso completo.
+            Iniciarás sesión de forma anónima, lo que limita tus funciones y no
+            guarda tus datos en una cuenta, por lo que podrías perderlos.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>

@@ -2,22 +2,22 @@ import { createBrowserRouter, redirect } from "react-router-dom";
 import { LoginForm, SignUpForm } from "@/pages";
 import App from "../App.tsx";
 import ResetPasswordForm from "@/pages/auth/reset-passwordForm.tsx";
-import { getUser } from "@/lib/api/getUser.ts";
 import ConfirmEmail from "@/pages/auth/confirm-email.tsx";
+import { getSession } from "@/lib/api/getSession.ts";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     loader: async () => {
-      const user = await getUser();
-      if (!user) {
+      const { session } = await getSession();
+      if (!session) {
         return redirect("/login");
       }
-      return null;
+      return session;
     },
-    children: [],
   },
+
   {
     path: "/login",
     element: <LoginForm />,

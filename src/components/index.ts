@@ -1,6 +1,6 @@
 export * from './add-balance-form';
 export * from './card-balances';
-export * from './dashboard-header';
+export * from './header';
 export * from './ui/badge';
 export * from './ui/breadcrumb';
 export * from './ui/button-loading';
