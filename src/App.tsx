@@ -1,14 +1,8 @@
-import DashboardLayout from "./layout/dashboard-layout";
-import { Toaster } from "@/components/ui/toaster";
-import DashboardHome from "./pages/dashboard-home";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./routes/router";
 
 function App() {
-  return (
-    <DashboardLayout>
-      <DashboardHome />
-      <Toaster />
-    </DashboardLayout>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

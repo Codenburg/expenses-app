@@ -1,15 +1,15 @@
+import { AuthSession } from "@supabase/supabase-js";
 import { supabase } from "db/supabase";
 
-export async function getSession() {
+export async function getSession(): Promise<AuthSession | null> {
     const { data: { session }, error } = await supabase.auth.getSession();
     if (!session) {
-        return { session: null, error: null };
+        return null;
     }
     if (error) {
-        const { data } = await supabase.auth.refreshSession({
+        await supabase.auth.refreshSession({
             refresh_token: session.refresh_token,
         });
-        return { session: data.session, error: null };
     }
-    return { session, error: null };
+    return session;
 }
