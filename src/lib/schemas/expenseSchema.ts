@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Categories,States,Methods } from "../types/Expenses";
+import { Categories,States,Methods } from "../../types/Expenses";
 
 export const expenseSchema = z.object({
   amount: z.string({

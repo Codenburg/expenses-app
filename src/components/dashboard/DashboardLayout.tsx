@@ -6,7 +6,8 @@ import {
   TooltipTrigger,
   TooltipProvider,
 } from "@/components/ui";
-import DashboardHeader from "@/components/header";
+
+import DashboardHeader from "@/components/dashboard/Header"
 
 // interface DashboardLayoutProps {
 //   children: ReactNode;

@@ -17,9 +17,9 @@ import {
 } from "@/components/ui";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { SignUpFormSchema } from "types/SignUpFormSchema";
+import { SignUpFormSchema } from "@/lib/schemas/signUpFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signUpNewUser } from "@/lib/api/signUpUser";
+import { signUpNewUser } from "@/hooks/auth/useSignup";
 
 export function SignUpForm() {
   const formInstance = useForm({

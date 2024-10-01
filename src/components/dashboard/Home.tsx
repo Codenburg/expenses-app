@@ -1,10 +1,10 @@
-import CardBalances from "@/components/card-balances"
+import CardBalances from "@/components/dashboard/CardBalances";
 
 function DashboardHome() {
   return (
     <>
       <div className="space-y-4 pb-6 pt-6">
-        <CardBalances />
+        <CardBalances/>
       </div>
     </>
   );

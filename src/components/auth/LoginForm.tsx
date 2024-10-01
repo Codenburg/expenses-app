@@ -19,10 +19,10 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { loginUser } from "@/lib/api/loginUser";
-import { LoginUserFormSchema } from "types/LoginUserFormSchema";
+import { loginUser } from "@/hooks/auth/useLogin";
+import { LoginUserFormSchema } from "@/lib/schemas/loginUserFormSchema";
 import { ErrorMessage } from "@hookform/error-message";
-import AnonymousSignInButton from "./anonymous-sign-in-button";
+import AnonymousSignInButton from "./AnonymousSignInButton";
 
 export function LoginForm() {
   const navigate = useNavigate();

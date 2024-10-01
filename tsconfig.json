@@ -9,7 +9,7 @@
     "paths": {
       "@/*": ["./src/*"],
       "db/*": ["./db/*"],
-      "types/*": ["./src/lib/types/*"]
+      "types/*": ["src/types/*"]
     },
 
     /* Bundler mode */
@@ -26,6 +26,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src", "tailwind.config.js", "tsconfig.node.json"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -14,9 +14,9 @@ import {
   Sheet,
   SheetContent,
   SheetTrigger,
-} from "@/components/ui";
-import { getUser } from "@/lib/api/getUser";
-import { logoutUser } from "@/lib/api/logoutUser";
+} from "@/components";
+import { getUser } from "@/api/getUser";
+import { logoutUser } from "@/hooks/auth/useLogout";
 import { UserMetadata } from "@supabase/supabase-js";
 import {
   HistoryIcon,
