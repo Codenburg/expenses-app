@@ -17,9 +17,9 @@ import {
 } from "@/components/ui";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { SignUpFormSchema } from "types/SignUpFormSchema";
+import { SignUpFormSchema } from "@/lib/schemas/signUpFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signUpNewUser } from "@/lib/api/signUpUser";
+import { signUpNewUser } from "@/hooks/auth/useSignup";
 
 export function SignUpForm() {
   const formInstance = useForm({
@@ -36,23 +36,24 @@ export function SignUpForm() {
     reValidateMode: "onChange",
   });
   const navigate = useNavigate();
+
   const onSubmit = async (values: SignUpFormSchema) => {
     const { email, password, firstName, lastName } = values;
-    const { ...error } = await signUpNewUser({
+    const { error, data } = await signUpNewUser({
       email,
       password,
       firstName,
       lastName,
     });
-    if (error.error) {
+    if (error) {
       formInstance.setError(
         "email",
-        { message: error.error.message },
+        { message: error.message },
         { shouldFocus: true }
       );
-      return;
+      return null;
     }
-    navigate("/confirm-email");
+    navigate("/confirm-email", { state: { email: data.user?.email } });
   };
 
   return (

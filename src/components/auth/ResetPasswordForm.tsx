@@ -1,12 +1,12 @@
 import {
+  Button,
   Card,
+  CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
-  CardContent,
-  Label,
   Input,
-  Button,
+  Label,
 } from "@/components/ui";
 import { Link } from "react-router-dom";
 
@@ -15,7 +15,7 @@ export default function ResetPasswordForm() {
     <div className="w-full h-screen flex items-center justify-center px-4 theme-zinc">
       <Card className="mx-auto max-w-sm">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl">Reset Password</CardTitle>
+          <CardTitle className="text-2xl">Restablecer Contraseña</CardTitle>
           <CardDescription>
             Ingresa tu correo electrónico para recibir un enlace para
             restablecer tu contraseña

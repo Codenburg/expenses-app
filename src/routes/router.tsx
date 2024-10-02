@@ -1,23 +1,14 @@
-import { createBrowserRouter, redirect } from "react-router-dom";
-import { LoginForm, SignUpForm } from "@/pages";
-import App from "../App.tsx";
-import ResetPasswordForm from "@/pages/auth/ResetPasswordForm.tsx";
-import { getUser } from "@/lib/api/getUser.ts";
-import ConfirmEmail from "@/pages/auth/ConfirmEmail.tsx";
+import { LoginForm, SignUpForm } from "@/components";
+import ConfirmEmail from "@/components/auth/ConfirmEmail";
+import ResetPasswordForm from "@/components/auth/ResetPasswordForm";
+import DashboardLayout from "@/components/dashboard/DashboardLayout";
+import DashboardHome from "@/components/dashboard/Home";
+import { isAuthenticated } from "@/hooks/auth/isAuth";
+import ProtectedRoute from "@/services/auth/ProtectedRoute";
+import { createBrowserRouter } from "react-router-dom";
+
 
 export const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-    loader: async () => {
-      const user = await getUser();
-      if (!user) {
-        return redirect("/login");
-      }
-      return null;
-    },
-    children: [],
-  },
   {
     path: "/login",
     element: <LoginForm />,
@@ -31,7 +22,21 @@ export const router = createBrowserRouter([
     element: <ConfirmEmail />,
   },
   {
-    path: "/reset-password",
+    path: "reset-password",
     element: <ResetPasswordForm />,
+  },
+  {
+    element: <ProtectedRoute isAuthenticated={isAuthenticated} />,
+    children: [
+      {
+        element: <DashboardLayout />,
+        children: [
+          {
+            element: <DashboardHome />,
+            path: "/",
+          },
+        ],
+      },
+    ],
   },
 ]);

@@ -1,13 +1,11 @@
-import { Toaster } from "@/components/ui/toaster";
-import CardBalances from "@/components/CardBalances";
+import CardBalances from "@/components/dashboard/CardBalances";
 
 function DashboardHome() {
   return (
     <>
       <div className="space-y-4 pb-6 pt-6">
-        <CardBalances />
+        <CardBalances/>
       </div>
-      <Toaster />
     </>
   );
 }

@@ -1,29 +1,31 @@
 import {
   Button,
+  ButtonLoading,
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
-  Input,
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
+  Input,
   PasswordInput,
-  useToast,
-  ButtonLoading,
 } from "@/components/ui";
 import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { loginUser } from "@/lib/api/loginUser";
-import { LoginUserFormSchema } from "types/LoginUserFormSchema";
+import { loginUser } from "@/hooks/auth/useLogin";
+import { LoginUserFormSchema } from "@/lib/schemas/loginUserFormSchema";
 import { ErrorMessage } from "@hookform/error-message";
-import { getUser } from "@/lib/api/getUser";
+import AnonymousSignInButton from "./AnonymousSignInButton";
+
 export function LoginForm() {
+  const navigate = useNavigate();
   const formInstance = useForm({
     mode: "onSubmit",
     resolver: zodResolver(LoginUserFormSchema),
@@ -34,23 +36,17 @@ export function LoginForm() {
     criteriaMode: "all",
     reValidateMode: "onSubmit",
   });
-  const navigate = useNavigate();
-  const { toast } = useToast();
+
   const onSubmit = async (values: LoginUserFormSchema) => {
     const { email, password } = values;
-    const { ...error } = await loginUser({ email, password });
-    if (error.error?.status === 400) {
+    const { error } = await loginUser({ email, password });
+    if (error?.status === 400) {
       formInstance.setError("root", {
         message: "Email o Contraseña incorrectos",
       });
-      return;
+      return null;
     }
     navigate("/");
-    toast({
-      //improve this to get the user name
-      title: `Hola ${(await getUser()).user_metadata.firstName}!👋`,
-      duration: 3000,
-    });
   };
 
   return (
@@ -59,7 +55,8 @@ export function LoginForm() {
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
           <CardDescription>
-            Ingresa tu email y contraseña para iniciar sesión
+            Ingresa tu email y contraseña para iniciar sesión o continua como
+            anónimo
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -124,15 +121,17 @@ export function LoginForm() {
                 Login with Google
               </Button> */}
             </div>
-
-            <div className="mt-4 text-center text-sm">
-              No tienes una cuenta?{" "}
-              <Link to="/sign-up" className="underline">
-                Crear cuenta
-              </Link>
-            </div>
           </form>
         </CardContent>
+        <CardFooter className="flex flex-col space-y-4">
+          <AnonymousSignInButton />
+          <div className=" text-center text-sm">
+            No tienes una cuenta?{" "}
+            <Link to="/sign-up" className="underline">
+              Crear cuenta
+            </Link>
+          </div>
+        </CardFooter>
       </Card>
     </div>
   );

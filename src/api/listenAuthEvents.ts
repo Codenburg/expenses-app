@@ -19,4 +19,4 @@ const { data } = supabase.auth.onAuthStateChange((event, session) => {
 });
 
 // call unsubscribe to remove the callback
-data.subscription.unsubscribe();
+// data.subscription.unsubscribe();

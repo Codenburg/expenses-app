@@ -1,12 +1,8 @@
-import  DashboardLayout  from "./Layout/Dashboard";
-import DashboardHome from "./pages/DashboardHome";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./routes/router";
 
 function App() {
-  return (
-    <DashboardLayout>
-        <DashboardHome/>
-    </DashboardLayout>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
