@@ -1,3 +1,4 @@
+import Error503 from "@/components/error/503";
 import { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
@@ -19,7 +20,7 @@ function ProtectedRoute({ isAuthenticated }: ProtectedRouteProps) {
 
   if (authenticated === null) {
     // Optionally, you can render a loading spinner here while checking authentication
-    return <div>Loading...</div>;
+    return <Error503 />;
   }
 
   if (!authenticated) {
